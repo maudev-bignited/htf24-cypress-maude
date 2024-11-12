@@ -99,12 +99,16 @@ describe('Start challenge', () => {
   it('Scan meteor', () => {
     cy.visitSecretPage('scanner');
 
-    cy.get(missionPage.meteor.floatingMeteor, {timeout: 20000})
-      .should('be.visible')
+    cy.get(missionPage.meteor.floatingMeteor, {timeout: 10000})
+      .should('be.visible');
+
+    cy.get(missionPage.meteor.floatingMeteor)
       .click();
 
     cy.get(missionPage.meteor.scanButton)
-      .should('contain', 'Press to scan')
+      .should('contain', 'Press to scan');
+
+    cy.get(missionPage.meteor.scanButton)
       .trigger('mousedown');
 
     cy.get(missionPage.meteor.scanButton, { timeout: 10000})
