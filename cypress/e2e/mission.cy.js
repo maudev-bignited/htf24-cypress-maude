@@ -1,4 +1,4 @@
-import {transmissionPage} from '../page-objects/transmissionPage';
+import {missionPage} from '../page-objects/missionPage';
 import {missionData} from '../data-objects/missionData';
 import {commonPage} from '../page-objects/commonPage';
 
@@ -11,7 +11,7 @@ describe('Start challenge', () => {
   });
 
   it('Click transmission', () => {
-    cy.get(transmissionPage.actionButton, {timeout: 10000})
+    cy.get(missionPage.actionButton, {timeout: 10000})
       .click();
   });
 
@@ -25,25 +25,25 @@ describe('Start challenge', () => {
   });
 
   it('Enter entity information', () => {
-    cy.get(transmissionPage.entityInformation.name)
+    cy.get(missionPage.entityInformation.name)
       .type('Arne + Maude');
 
-    cy.get(transmissionPage.entityInformation.age)
+    cy.get(missionPage.entityInformation.age)
       .type('24');
 
-    cy.get(transmissionPage.entityInformation.species)
+    cy.get(missionPage.entityInformation.species)
       .select('Zerg');
 
-    cy.get(transmissionPage.entityInformation.planet)
+    cy.get(missionPage.entityInformation.planet)
       .type('Earth {enter}');
   });
 
   it('Collect code', () => {
     cy.visitSecretPage('collect-code');
-    cy.get(transmissionPage.victim)
+    cy.get(missionPage.victim)
       .click(missionData.victim.xPosition,missionData.victim.yPosition);
 
-    cy.get(transmissionPage.murderCode)
+    cy.get(missionPage.murderCode)
       .should('be.visible')
       .then(murderCode => {
         MURDER_CODE = murderCode.text();
@@ -52,21 +52,21 @@ describe('Start challenge', () => {
 
   it('Go to gate', () => {
     cy.visitSecretPage('gate');
-    cy.get(transmissionPage.gate.numpad).click();
-    cy.get(transmissionPage.gate.numpadOpen).should('be.visible');
+    cy.get(missionPage.gate.numpad).click();
+    cy.get(missionPage.gate.numpadOpen).should('be.visible');
 
     // TODO: fix arbitrary wait
     cy.wait(1000);
   });
 
   it('Enter code', () => {
-    cy.get(transmissionPage.gate.numpadScreen)
+    cy.get(missionPage.gate.numpadScreen)
       .type(MURDER_CODE, {force: true});
 
-    cy.get(transmissionPage.gate.enter)
+    cy.get(missionPage.gate.enter)
       .click();
 
-    cy.get(transmissionPage.gate.numpad)
+    cy.get(missionPage.gate.numpad)
       .should('not.be.visible');
   });
 
@@ -99,15 +99,15 @@ describe('Start challenge', () => {
   it('Scan meteor', () => {
     cy.visitSecretPage('scanner');
 
-    cy.get(transmissionPage.meteor.floatingMeteor, {timeout: 20000})
+    cy.get(missionPage.meteor.floatingMeteor, {timeout: 20000})
       .should('be.visible')
       .click();
 
-    cy.get(transmissionPage.meteor.scanButton)
+    cy.get(missionPage.meteor.scanButton)
       .should('contain', 'Press to scan')
       .trigger('mousedown');
 
-    cy.get(transmissionPage.meteor.scanButton, { timeout: 10000})
+    cy.get(missionPage.meteor.scanButton, { timeout: 10000})
       .should('not.exist');
   });
 
@@ -116,11 +116,11 @@ describe('Start challenge', () => {
     let WANTED_READING = '';
     cy.visit('/experiment', {failOnStatusCode: false});
 
-    cy.get(transmissionPage.experiment.currentReading)
+    cy.get(missionPage.experiment.currentReading)
       .should('be.visible')
       .then(currentReading => {
         CURRENT_READING = currentReading.text();
-        cy.get(transmissionPage.experiment.wantedReading)
+        cy.get(missionPage.experiment.wantedReading)
           .should('be.visible')
           .then(wantedReading => {
             WANTED_READING = wantedReading.text();
@@ -129,13 +129,13 @@ describe('Start challenge', () => {
               if (outcome < 0) {
                 outcome = Math.abs(outcome);
                 for (let j = 0; j < outcome; j++) {
-                  cy.get(transmissionPage.experiment.arrowDown)
+                  cy.get(missionPage.experiment.arrowDown)
                     .eq(i)
                     .click({force: true});
                 }
               } else {
                 for (let j = 0; j < outcome; j++) {
-                  cy.get(transmissionPage.experiment.arrowUp)
+                  cy.get(missionPage.experiment.arrowUp)
                     .eq(i)
                     .click({force: true});
                 }
@@ -149,10 +149,10 @@ describe('Start challenge', () => {
 
   it('Defeat the boss', () => {
     cy.visitSecretPage('boss');
-    cy.get(transmissionPage.bossFight.boss).then(($boss) => {
+    cy.get(missionPage.bossFight.boss).then(($boss) => {
       const xPositionBoss = $boss[0].getBoundingClientRect().x;
 
-      cy.get(transmissionPage.bossFight.player).then(($player) => {
+      cy.get(missionPage.bossFight.player).then(($player) => {
         const xPositionPlayer = $player[0].getBoundingClientRect().x;
 
         const xDifference = xPositionPlayer - xPositionBoss;

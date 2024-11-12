@@ -1,4 +1,4 @@
-export const transmissionPage = {
+export const missionPage = {
   actionButton: '#action-button',
   entityInformation: {
     name: '#name',
