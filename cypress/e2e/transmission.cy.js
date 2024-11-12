@@ -1,5 +1,6 @@
 import {transmissionPage} from "../page-objects/transmissionPage";
 import {missionData} from "../data-objects/missionData";
+import {commonPage} from "../page-objects/commonPage";
 
 describe('Start challenge', () => {
     let MURDER_CODE = ''
@@ -15,7 +16,7 @@ describe('Start challenge', () => {
     })
 
     it('Skip earth', () => {
-        cy.get('body')
+        cy.get(commonPage.body)
             .click()
     })
 
@@ -68,26 +69,26 @@ describe('Start challenge', () => {
     })
 
     it('Enter the dark room', () => {
-        cy.get('body').type('{upArrow}')
+        cy.get(commonPage.body).type('{upArrow}')
     })
 
     it('Meet the lady', () => {
         cy.visitSecretPage('the-lady')
 
-        cy.get('button')
+        cy.get(commonPage.button)
             .contains('Yes')
             .click({force: true})
 
-        cy.get('p')
+        cy.get(commonPage.p)
             .contains('lie')
             .within(() => {
-                cy.get('button')
+                cy.get(commonPage.button)
                     .contains('Yes')
                     .click({force: true})
         })
 
         for (let i = 0; i < missionData.lady.firstAmountOfQuestions; i++) {
-            cy.get('button')
+            cy.get(commonPage.button)
                 .eq(0)
                 .click({force: true})
         }
@@ -139,7 +140,7 @@ describe('Start challenge', () => {
                             }
 
                         }
-                        cy.get('body').type('{enter}')
+                        cy.get(commonPage.body).type('{enter}')
                     })
             })
     })
@@ -159,15 +160,15 @@ describe('Start challenge', () => {
                     const steps = Math.abs(xDifference) / 40;
 
                     for (let i = 0; i < steps; i++) {
-                        cy.get('body').type(direction);
+                        cy.get(commonPage.body).type(direction);
                     }
                 }
             });
         });
 
-        cy.get('body').click()
+        cy.get(commonPage.body).click()
         for (let i = 0; i < 100; i++) {
-            cy.get('body').trigger('keydown', {
+            cy.get(commonPage.body).trigger('keydown', {
                 key: " "
             })
         }
@@ -177,7 +178,7 @@ describe('Start challenge', () => {
         cy.visitSecretPage('won')
 
         for (let i = 0; i < missionData.lady.endAmountOfQuestions; i++) {
-            cy.get('button')
+            cy.get(commonPage.button)
                 .eq(0)
                 .click({force: true})
         }
