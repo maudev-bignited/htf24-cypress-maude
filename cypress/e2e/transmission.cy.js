@@ -175,4 +175,20 @@ describe('Start challenge', () => {
             })
         }
     })
+
+    it('We\'ve won and go back to the lady', () => {
+        cy.visit('/won', {failOnStatusCode: false})
+
+        const NUMBER_OF_QUESTIONS = 6
+
+        for (let i = 0; i < NUMBER_OF_QUESTIONS; i++) {
+            cy.get('button')
+                .eq(0)
+                .click({force: true})
+        }
+    })
+
+    it('Showing our winning stats', () => {
+        cy.contains('Mission completed')
+    })
 })
