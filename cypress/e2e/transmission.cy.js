@@ -1,4 +1,5 @@
 import {transmissionPage} from "../page-objects/transmissionPage";
+import {missionData} from "../data-objects/missionData";
 
 describe('Start challenge', () => {
     let MURDER_CODE = ''
@@ -39,7 +40,7 @@ describe('Start challenge', () => {
     it('Collect code', () => {
         cy.visit('/collect-code', { failOnStatusCode: false})
         cy.get(transmissionPage.victim)
-            .click(200,195)
+            .click(missionData.victim.xPosition,missionData.victim.yPosition)
 
         cy.get(transmissionPage.murderCode)
             .should('be.visible')
@@ -85,9 +86,7 @@ describe('Start challenge', () => {
                     .click({force: true})
         })
 
-        const NUMBER_OF_QUESTIONS = 3
-
-        for (let i = 0; i < NUMBER_OF_QUESTIONS; i++) {
+        for (let i = 0; i < missionData.lady.firstAmountOfQuestions; i++) {
             cy.get('button')
                 .eq(0)
                 .click({force: true})
@@ -95,7 +94,6 @@ describe('Start challenge', () => {
     })
 
     it('Scan meteor', () => {
-        cy.clearLocalStorage('cure')
         cy.visit('/scanner', {failOnStatusCode: false})
 
         cy.get(transmissionPage.meteor.floatingMeteor, {timeout: 20000})
@@ -178,9 +176,7 @@ describe('Start challenge', () => {
     it('We\'ve won and go back to the lady', () => {
         cy.visit('/won', {failOnStatusCode: false})
 
-        const NUMBER_OF_QUESTIONS = 6
-
-        for (let i = 0; i < NUMBER_OF_QUESTIONS; i++) {
+        for (let i = 0; i < missionData.lady.endAmountOfQuestions; i++) {
             cy.get('button')
                 .eq(0)
                 .click({force: true})
