@@ -1,3 +1,3 @@
 Cypress.Commands.add('visitSecretPage', (pageUrl) => {
-    cy.visit(`/${pageUrl}`, { failOnStatusCode: false})
-})
+  cy.visit(`/${pageUrl}`, { failOnStatusCode: false});
+});
