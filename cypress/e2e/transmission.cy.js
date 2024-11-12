@@ -119,7 +119,6 @@ describe('Start challenge', () => {
             .should('be.visible')
             .then(currentReading => {
                 CURRENT_READING = currentReading.text()
-                console.log("current" + CURRENT_READING)
                 cy.get(transmissionPage.experiment.wantedReading)
                     .should('be.visible')
                     .then(wantedReading => {
