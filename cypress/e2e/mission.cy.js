@@ -57,7 +57,7 @@ describe('Start challenge', () => {
     cy.get(missionPage.gate.numpad).click();
     cy.get(missionPage.gate.numpadOpen).should('be.visible');
 
-    // TODO: fix arbitrary wait
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
   });
 
