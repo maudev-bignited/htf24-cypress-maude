@@ -1,6 +1,7 @@
 import {missionPage} from '../page-objects/missionPage';
 import {missionData} from '../data-objects/missionData';
 import {commonPage} from '../page-objects/commonPage';
+import {adjustReading} from '../components/experimentComponent.js';
 
 describe('Start challenge', () => {
   let MURDER_CODE = '';
@@ -116,36 +117,21 @@ describe('Start challenge', () => {
   });
 
   it('Fix cure in experiment', () => {
-    let CURRENT_READING = '';
-    let WANTED_READING = '';
     cy.visitSecretPage('experiment');
 
     cy.get(missionPage.experiment.currentReading)
       .should('be.visible')
-      .then(currentReading => {
-        CURRENT_READING = currentReading.text();
+      .invoke('text')
+      .then((currentReading) => {
         cy.get(missionPage.experiment.wantedReading)
           .should('be.visible')
-          .then(wantedReading => {
-            WANTED_READING = wantedReading.text();
-            for (let i = 0; i < CURRENT_READING.length; i++) {
-              let outcome = WANTED_READING[i] - CURRENT_READING[i];
-              if (outcome < 0) {
-                outcome = Math.abs(outcome);
-                for (let j = 0; j < outcome; j++) {
-                  cy.get(missionPage.experiment.arrowDown)
-                    .eq(i)
-                    .click({force: true});
-                }
-              } else {
-                for (let j = 0; j < outcome; j++) {
-                  cy.get(missionPage.experiment.arrowUp)
-                    .eq(i)
-                    .click({force: true});
-                }
-              }
+          .invoke('text')
+          .then((wantedReading) => {
+            [...currentReading].forEach((currentLevel, index) => {
+              const targetLevel = wantedReading[index];
+              adjustReading(index, currentLevel, targetLevel);
+            });
 
-            }
             cy.get(commonPage.body).type('{enter}');
           });
       });
