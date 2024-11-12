@@ -146,4 +146,33 @@ describe('Start challenge', () => {
                     })
             })
     })
+
+    it('Defeat the boss', () => {
+        cy.visit('/boss', {failOnStatusCode: false})
+        cy.get(transmissionPage.bossFight.boss).then(($boss) => {
+            const xPositionBoss = $boss[0].getBoundingClientRect().x;
+
+            cy.get(transmissionPage.bossFight.player).then(($player) => {
+                const xPositionPlayer = $player[0].getBoundingClientRect().x;
+
+                const xDifference = xPositionPlayer - xPositionBoss;
+
+                if (xDifference !== 0) {
+                    const direction = xDifference > 0 ? '{leftarrow}' : '{rightarrow}';
+                    const steps = Math.abs(xDifference) / 40;
+
+                    for (let i = 0; i < steps; i++) {
+                        cy.get('body').type(direction);
+                    }
+                }
+            });
+        });
+
+        cy.get('body').click()
+        for (let i = 0; i < 100; i++) {
+            cy.get('body').trigger('keydown', {
+                key: " "
+            })
+        }
+    })
 })
