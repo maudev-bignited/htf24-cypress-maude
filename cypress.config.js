@@ -15,5 +15,6 @@ module.exports = defineConfig({
 
         },
         baseUrl: 'https://hackthefuture.bignited.be',
+        testIsolation: false
     }
 })
