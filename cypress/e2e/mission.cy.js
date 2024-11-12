@@ -139,6 +139,7 @@ describe('Start challenge', () => {
 
   it('Defeat the boss', () => {
     cy.visitSecretPage('boss');
+
     cy.get(missionPage.bossFight.boss).then(($boss) => {
       const xPositionBoss = $boss[0].getBoundingClientRect().x;
 
@@ -149,7 +150,7 @@ describe('Start challenge', () => {
 
         if (xDifference !== 0) {
           const direction = xDifference > 0 ? '{leftarrow}' : '{rightarrow}';
-          const steps = Math.abs(xDifference) / 40;
+          const steps = Math.abs(xDifference) / missionData.bossFight.pixelDifference;
 
           for (let i = 0; i < steps; i++) {
             cy.get(commonPage.body).type(direction);

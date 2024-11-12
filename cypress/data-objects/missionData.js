@@ -6,5 +6,8 @@ export const missionData = {
   lady: {
     firstAmountOfQuestions: 3,
     endAmountOfQuestions: 6
+  },
+  bossFight: {
+    pixelDifference: 40
   }
 };
