@@ -20,7 +20,7 @@ describe('Start challenge', () => {
     })
 
     it('Get to information page', () => {
-        cy.visit('/information', { failOnStatusCode: false})
+        cy.visitSecretPage('information')
     })
 
     it('Enter entity information', () => {
@@ -38,7 +38,7 @@ describe('Start challenge', () => {
     })
 
     it('Collect code', () => {
-        cy.visit('/collect-code', { failOnStatusCode: false})
+        cy.visitSecretPage('collect-code')
         cy.get(transmissionPage.victim)
             .click(missionData.victim.xPosition,missionData.victim.yPosition)
 
@@ -50,7 +50,7 @@ describe('Start challenge', () => {
     })
 
     it('Go to gate', () => {
-        cy.visit('/gate', {failOnStatusCode: false})
+        cy.visitSecretPage('gate')
         cy.get(transmissionPage.gate.numpad).click()
         cy.get(transmissionPage.gate.numpadOpen).should('be.visible')
         cy.wait(1000)
@@ -72,7 +72,7 @@ describe('Start challenge', () => {
     })
 
     it('Meet the lady', () => {
-        cy.visit('/the-lady', {failOnStatusCode: false})
+        cy.visitSecretPage('the-lady')
 
         cy.get('button')
             .contains('Yes')
@@ -94,7 +94,7 @@ describe('Start challenge', () => {
     })
 
     it('Scan meteor', () => {
-        cy.visit('/scanner', {failOnStatusCode: false})
+        cy.visitSecretPage('scanner')
 
         cy.get(transmissionPage.meteor.floatingMeteor, {timeout: 20000})
             .should('be.visible')
@@ -145,7 +145,7 @@ describe('Start challenge', () => {
     })
 
     it('Defeat the boss', () => {
-        cy.visit('/boss', {failOnStatusCode: false})
+        cy.visitSecretPage('boss')
         cy.get(transmissionPage.bossFight.boss).then(($boss) => {
             const xPositionBoss = $boss[0].getBoundingClientRect().x;
 
@@ -174,7 +174,7 @@ describe('Start challenge', () => {
     })
 
     it('We\'ve won and go back to the lady', () => {
-        cy.visit('/won', {failOnStatusCode: false})
+        cy.visitSecretPage('won')
 
         for (let i = 0; i < missionData.lady.endAmountOfQuestions; i++) {
             cy.get('button')
