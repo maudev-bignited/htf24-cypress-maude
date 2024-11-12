@@ -2,6 +2,7 @@ import {missionPage} from '../page-objects/missionPage';
 import {missionData} from '../data-objects/missionData';
 import {commonPage} from '../page-objects/commonPage';
 import {adjustReading} from '../components/experimentComponent.js';
+import {attackUntilDefeated} from '../components/bossFightComponent.js';
 
 describe('Start challenge', () => {
   let MURDER_CODE = '';
@@ -145,7 +146,6 @@ describe('Start challenge', () => {
 
       cy.get(missionPage.bossFight.player).then(($player) => {
         const xPositionPlayer = $player[0].getBoundingClientRect().x;
-
         const xDifference = xPositionPlayer - xPositionBoss;
 
         if (xDifference !== 0) {
@@ -160,11 +160,7 @@ describe('Start challenge', () => {
     });
 
     cy.get(commonPage.body).click();
-    for (let i = 0; i < 100; i++) {
-      cy.get(commonPage.body).trigger('keydown', {
-        key: ' '
-      });
-    }
+    attackUntilDefeated();
   });
 
   it('We\'ve won and go back to the lady', () => {
