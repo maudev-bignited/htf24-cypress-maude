@@ -118,7 +118,7 @@ describe('Start challenge', () => {
   it('Fix cure in experiment', () => {
     let CURRENT_READING = '';
     let WANTED_READING = '';
-    cy.visit('/experiment', {failOnStatusCode: false});
+    cy.visitSecretPage('experiment');
 
     cy.get(missionPage.experiment.currentReading)
       .should('be.visible')
